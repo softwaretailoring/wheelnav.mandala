@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Mandala paths for wheelnav.js library">
+        <meta name="author" content="gabor.berkesi@softwaretailoring.net">
+        <link rel="shortcut icon" href="http://wheelnavjs.softwaretailoring.net/wheelnav_favicon.png">
+
+        <title>wheelnav.js - mandalas</title>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <link href="css/index.css" rel="stylesheet">
+
+        <script type="text/javascript" src="js/raphael.min.js"></script> 
+        <script type="text/javascript" src="js/raphael.icons.js"></script>
+        <script type="text/javascript" src="js/wheelnav.js"></script>
+        <script type="text/javascript" src="js/wheelnav.mandala.js"></script>
+        <script type="text/javascript">
+
+            var mandalaWheel;
+            var selectedToFront = true;
+
+            window.onload = function () {
+                setYinYangMandala();
+            };
+            
+            var setYinYangMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = slicePath().YinYangSlice;
+                mandalaWheel.sliceHoverTransformFunction = sliceTransform().RotateTitleTransform;
+                mandalaWheel.sliceTransformFunction = sliceTransform().ScaleTitleTransform;
+                mandalaWheel.sliceSelectedTransformFunction = sliceTransform().ScaleTitleTransform;
+                mandalaWheel.colors = new Array("#000", "#FFF");
+                mandalaWheel.animatetime = 5000;
+                mandalaWheel.animateeffect = "linear";
+                mandalaWheel.rotateRoundCount = 100;
+                mandalaWheel.initWheel([icon.smile, icon.smile]);
+                mandalaWheel.navItems[0].titleAttr = { font: mandalaWheel.titleFont, fill: "#FFF", stroke: "none", cursor: 'pointer' };
+                mandalaWheel.navItems[0].titleSelectedAttr = { font: mandalaWheel.titleFont, fill: "#FFF" };
+                mandalaWheel.navItems[0].titleHoverAttr = { font: this.titleFont, fill: "#EEE", cursor: 'pointer', stroke: "none" };
+                mandalaWheel.navItems[0].slicePathAttr = { stroke: "#000", "stroke-width": 2, cursor: 'pointer' };
+                mandalaWheel.navItems[0].sliceHoverAttr = { stroke: "#000", "stroke-width": 2 };
+                mandalaWheel.navItems[0].sliceSelectedAttr = { stroke: "#000", "stroke-width": 2 };
+                mandalaWheel.navItems[1].titleAttr = { font: mandalaWheel.titleFont, fill: "#000", stroke: "none", cursor: 'pointer' };
+                mandalaWheel.navItems[1].titleSelectedAttr = { font: mandalaWheel.titleFont, fill: "#000" };
+                mandalaWheel.navItems[1].titleHoverAttr = { font: this.titleFont, fill: "#111", cursor: 'pointer', stroke: "none" };
+                mandalaWheel.navItems[1].slicePathAttr = { stroke: "#000", "stroke-width": 2, cursor: 'pointer' };
+                mandalaWheel.navItems[1].sliceHoverAttr = { stroke: "#000", "stroke-width": 2 };
+                mandalaWheel.navItems[1].sliceSelectedAttr = { stroke: "#000", "stroke-width": 2 };
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+
+                selectedToFront = true;
+
+                //selectAllMandala();
+
+                setButtonAnimate(false);
+            }
+
+            var setFlowerMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().FlowerSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().FlowerSliceSelected;
+                mandalaWheel.navItemCount = 6;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.fractallove;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+
+                selectedToFront = true;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var setCoordMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().CoordSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().CoordSliceSelected;
+                mandalaWheel.navAngle = 18;
+                mandalaWheel.navItemCount = 5;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.fractallovetwo;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+
+                selectedToFront = true;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var setSpiralMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().SpiralSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().SpiralSliceSelected;
+                mandalaWheel.navItemCount = 6;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.fractallove;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(2);
+                mandalaWheel.navigateWheel(4);
+
+                selectedToFront = true;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var setHexaMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().HexaSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().HexaSliceSelected;
+                mandalaWheel.navItemCount = 24;
+                mandalaWheel.rotateRoundCount = 100;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.theworldismine;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(23);
+
+                selectedToFront = true;
+
+                //selectAllMandala();
+
+                setButtonAnimate(false);
+            }
+
+            var setHexaCircleMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().HexaCircleSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().HexaCircleSliceSelected;
+                mandalaWheel.navItemCount = 10;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.pisycholand;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+
+                selectedToFront = true;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var setHexaTriangleMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().HexaTriangleSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().HexaTriangleSliceSelected;
+                mandalaWheel.navItemCount = 12;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.makeLOVEnotWAR;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+                mandalaWheel.navigateWheel(1);
+                mandalaWheel.navigateWheel(3);
+                mandalaWheel.navigateWheel(5);
+                mandalaWheel.navigateWheel(7);
+                mandalaWheel.navigateWheel(9);
+                mandalaWheel.navigateWheel(11);
+
+                selectedToFront = true;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var setHexaFlowerMandala = function () {
+                mandalaWheel = new wheelnav("mandalaWheelDiv");
+                mandalaWheel.slicePathFunction = mandalaPath().HexaFlowerSlice;
+                mandalaWheel.sliceSelectedPathFunction = mandalaPath().HexaFlowerSliceSelected;
+                mandalaWheel.navItemCount = 6;
+                mandalaWheel.clickModeRotate = false;
+                mandalaWheel.multiSelect = true;
+                mandalaWheel.colors = colorpalette.fractallove;
+                mandalaWheel.createWheel();
+                mandalaWheel.navigateWheel(0);
+
+                selectedToFront = false;
+
+                selectAllMandala();
+
+                setButtonAnimate(true);
+            }
+
+            var selectAllMandala = function () {
+                for (var i = 0; i < mandalaWheel.navItems.length; i++) {
+                    mandalaWheel.navigateWheel(i, selectedToFront);
+                }
+            }
+
+            var setButtonAnimate = function (visible) {
+                if (visible) {
+                    document.getElementById("buttonAnimate").removeAttribute("hidden");
+                }
+                else {
+                    document.getElementById("buttonAnimate").setAttribute("hidden", "hidden");
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <header>
+            <p>
+                This is a mandala page for wheelnav.js library. 
+                For more information please visit the <a href="http://wheelnavjs.softwaretailoring.net" target="_blank">project page</a>
+            </p>
+        </header>
+        <div style="text-align: center;">
+            <input type="button" onclick="setYinYangMandala();" class="mandalaButton" value="YinYang"/>
+            <input type="button" onclick="setFlowerMandala();" class="mandalaButton" value="Flower"/>
+            <input type="button" onclick="setHexaFlowerMandala();" class="mandalaButton" value="Flower 2"/>
+            <input type="button" onclick="setCoordMandala();" class="mandalaButton" value="Coord"/>
+            <input type="button" onclick="setSpiralMandala();" class="mandalaButton" value="Spiral"/>
+            <input type="button" onclick="setHexaMandala();" class="mandalaButton" value="Hexa"/>
+            <input type="button" onclick="setHexaCircleMandala();" class="mandalaButton" value="Hexa 2"/>
+            <input type="button" onclick="setHexaTriangleMandala();" class="mandalaButton" value="Hexa 3"/>
+        </div>
+        <div style="height:20px;" ></div>
+        <div id="mandalaWheelDiv" class="wheelNavBig"></div>
+        <div style="height:20px;" ></div>
+        <div style="text-align: center;" ><input id="buttonAnimate" type="button" onclick="selectAllMandala();" class="mandalaButton" value="Animate"/></div>
+        <div style="height:100px;" ></div>
+        <footer>
+            <label class="tradename">&copy; 2015 <a href="http://softwaretailoring.net" target="_blank">softwaretailoring.net</a></label>
+        </footer>
+    </body>
+</html>
